@@ -35,12 +35,13 @@
             this.btnContext = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.chkNotification = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.更新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newsGetter = new System.ComponentModel.BackgroundWorker();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.ptListBegin = new System.Windows.Forms.Label();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.splashTimer = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +77,7 @@
             // btnContext
             // 
             this.btnContext.ContextMenuStrip = this.contextMenuStrip1;
+            this.btnContext.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnContext.Location = new System.Drawing.Point(3, 2);
             this.btnContext.Name = "btnContext";
             this.btnContext.Size = new System.Drawing.Size(49, 52);
@@ -99,8 +101,16 @@
             this.chkNotification.CheckOnClick = true;
             this.chkNotification.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkNotification.Name = "chkNotification";
-            this.chkNotification.Size = new System.Drawing.Size(152, 22);
+            this.chkNotification.Size = new System.Drawing.Size(100, 22);
             this.chkNotification.Text = "通知";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.CheckOnClick = true;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+            this.toolStripMenuItem1.Text = "置顶";
+            this.toolStripMenuItem1.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             // 
             // 更新ToolStripMenuItem
             // 
@@ -112,7 +122,7 @@
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
@@ -137,13 +147,11 @@
             this.ptListBegin.TabIndex = 3;
             this.ptListBegin.Text = "label1";
             // 
-            // toolStripMenuItem1
+            // splashTimer
             // 
-            this.toolStripMenuItem1.CheckOnClick = true;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.toolStripMenuItem1.Text = "置顶";
-            this.toolStripMenuItem1.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
+            this.splashTimer.Enabled = true;
+            this.splashTimer.Interval = 1000;
+            this.splashTimer.Tick += new System.EventHandler(this.splashTimer_Tick);
             // 
             // Form1
             // 
@@ -160,9 +168,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Location = new System.Drawing.Point(30, 30);
             this.Name = "Form1";
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "PlagueCast";
+            this.Text = "疫情播报";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -184,6 +192,7 @@
         private System.Windows.Forms.Label ptListBegin;
         private System.Windows.Forms.ToolStripMenuItem chkNotification;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.Timer splashTimer;
     }
 }
 

@@ -77,7 +77,7 @@ namespace PlagueCast
     {
         
 
-        public static string useragent = "Mozilla/5.0 (Linux; Android 9; PH-1 Build/PPR1.180610.091; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044807 Mobile Safari/537.36 V1_AND_SQ_8.0.8_1218_YYB_D QQ/8.0.8.4115 NetType/WIFI WebP/0.3.0 Pixel/1312 StatusBarHeight/151";
+        public static string useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0";
 
         public static string DictionaryToHttpKeyValue(Dictionary<string, string> dic)
         {
@@ -98,7 +98,7 @@ namespace PlagueCast
             HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url + "?" + httpKeyValue);
             req.Timeout = 9999;
             req.Method = "GET";
-            req.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
+            req.Accept = "text/html,application/xhtml+xml,application/xml,application/json,image/webp,image/apng,*/*;q=0.8";
             req.UserAgent = useragent;
             req.Headers.Add("Accept-Language", "zh,zh-CN;q=0.9;q=0.9");
             req.Headers.Add("Accept-Encoding", "identity");

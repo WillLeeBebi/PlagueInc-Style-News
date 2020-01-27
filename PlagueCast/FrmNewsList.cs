@@ -26,9 +26,22 @@ namespace PlagueCast
             GDI = new GdiSystem(this);
             GDI.Graphics.Clear(backgroundColor);
             GDI.UpdateWindow();
+            tblLiskContainer.MouseWheel += TblLiskContainer_MouseWheel;
         }
 
-        
+        private void TblLiskContainer_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                velotery = -0.2f;
+            }
+            else if (e.Delta < 0)
+            {
+                velotery = 0.2f;
+            }
+        }
+
+
 
         #region InitializeGDI
 
@@ -190,7 +203,9 @@ namespace PlagueCast
                 {
                     if (titleArea.Contains(postClickX, postClickY) || timeArea.Contains(postClickX, postClickY)) {
                         postClickY = 0; postClickX = 0;
+                        Visible = false;
                         new FrmNewsDialog(ti.title, ti.summary, ti.sourceUrl).ShowDialog();
+                        Visible = true;
                     }
                 }
 

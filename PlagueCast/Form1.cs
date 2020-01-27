@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyGDIFramework;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace PlagueCast
 {
@@ -113,17 +114,33 @@ namespace PlagueCast
             }
             strWidth =(int) g.MeasureString(current, marFont).Width;
         }
-
+        WebClient wc = new WebClient() {
+            Encoding=Encoding.UTF8
+        };
         private void newsGetter_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
-                String html = Utils.httpGet(Program.url);
-                String json = Utils.SearchJson(html, "window.getTimelineService");
+                
+
+                //HttpWebRequest xhr = BomberUtils.MakeHttpGet(Program.urlnews, null);
+                //xhr.Referer = "https://3g.dxy.cn/newh5/view/pneumonia_timeline";
+                //xhr.Accept = "application/json";
+                //xhr.ContentType = "application/json;charset=utf-8";
+                //String newshtml = BomberUtils.GetHttpResponse(xhr);
+                
+                string newshtml = wc.DownloadString(Program.urlnews);
+                String html = wc.DownloadString(Program.url);//Utils.httpGet(Program.url);
+
+
+                String json1 = Utils.SearchJson(newshtml, "\"data\":");
+                String json0 = Utils.SearchJson(html, "window.getTimelineService");
                 status = Utils.SearchJson(html, "window.getStatisticsService");
                 status = JsonConvert.DeserializeObject<SummaryItem>(status).countRemark;
                 status = status.Replace('\r', ' ').Replace('\n', ' ');
-                e.Result = JsonConvert.DeserializeObject<List<NewsItem>>(json);
+                List<NewsItem> list0 = JsonConvert.DeserializeObject<List<NewsItem>>(json0);
+                list0.AddRange(JsonConvert.DeserializeObject<List<NewsItem>>(json1));
+                e.Result = list0;
             }
             catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
@@ -211,6 +228,21 @@ namespace PlagueCast
         private void toolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
         {
             TopMost = toolStripMenuItem1.Checked;
+        }
+
+        private void splashTimer_Tick(object sender, EventArgs e)
+        {
+            splashTimer.Enabled = false;
+
+            notificationQueue.Add(new FrmNewsDialog("欢迎使用 疫情播报桌面小部件","数据来自丁香园（爬虫），每8分钟更新一次。获取新闻可能失败（玄学问题），请换网或在github提Issue。\r\n点击详情打开github页面", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
+            notificationQueue.Add(new FrmNewsDialog("提示：在标题栏左边图标右击有选项菜单","右击标题栏左边NEWS图标，可以打开选项菜单，可以设置通知，置顶，刷新以及退出。", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
+            notificationQueue.Add(new FrmNewsDialog("提示：单击新闻列表项目打开详情","单击新闻列表中的一项可以查看标题，内容和原始链接。", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
+            raiseNotification();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
