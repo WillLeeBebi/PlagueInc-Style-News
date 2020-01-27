@@ -121,8 +121,6 @@ namespace PlagueCast
         {
             try
             {
-                
-
                 //HttpWebRequest xhr = BomberUtils.MakeHttpGet(Program.urlnews, null);
                 //xhr.Referer = "https://3g.dxy.cn/newh5/view/pneumonia_timeline";
                 //xhr.Accept = "application/json";
@@ -135,6 +133,7 @@ namespace PlagueCast
 
                 String json1 = Utils.SearchJson(newshtml, "\"data\":");
                 String json0 = Utils.SearchJson(html, "window.getTimelineService");
+                status = null;
                 status = Utils.SearchJson(html, "window.getStatisticsService");
                 status = JsonConvert.DeserializeObject<SummaryItem>(status).countRemark;
                 status = status.Replace('\r', ' ').Replace('\n', ' ');
@@ -149,19 +148,19 @@ namespace PlagueCast
 
         int lastlen = -1;
 
-        string status = "";
+        string pstatus = "预计需要更长时间获取状态...", status = null;
         private void newsGetter_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             List<NewsItem> news = e.Result as List<NewsItem>;
-            
-            if (null != news)
-            {
-                newsItems = news;
+            if (null != status) { pstatus = status; }
+            if (null != news){ newsItems = news;}
+
+            if (null != newsItems) { 
                 lock (marqueeContents)
                 {
                     marqueeContents.Clear();
                     marqueeContents.Add(news.First().title);
-                    marqueeContents.Add(status);
+                    marqueeContents.Add(pstatus);
                     //read(marqueeGraphics);
                 }
 
@@ -183,7 +182,7 @@ namespace PlagueCast
             else
             {
                 marqueeContents.Clear();
-                marqueeContents.Add("获取新闻失败!");
+                marqueeContents.Add("预计需要更长时间获取新闻。");
                 updateTimer.Interval = 30000;
             }
         }
@@ -243,6 +242,16 @@ namespace PlagueCast
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void 更新ToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            updateTimer_Tick(sender, e);
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TopMost = toolStripMenuItem1.Checked;
         }
     }
 }

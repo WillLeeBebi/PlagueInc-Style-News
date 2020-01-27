@@ -80,7 +80,7 @@
             this.btnContext.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnContext.Location = new System.Drawing.Point(3, 2);
             this.btnContext.Name = "btnContext";
-            this.btnContext.Size = new System.Drawing.Size(49, 52);
+            this.btnContext.Size = new System.Drawing.Size(49, 50);
             this.btnContext.TabIndex = 2;
             this.btnContext.Text = "button1";
             this.btnContext.UseVisualStyleBackColor = true;
@@ -101,28 +101,29 @@
             this.chkNotification.CheckOnClick = true;
             this.chkNotification.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkNotification.Name = "chkNotification";
-            this.chkNotification.Size = new System.Drawing.Size(100, 22);
+            this.chkNotification.Size = new System.Drawing.Size(152, 22);
             this.chkNotification.Text = "通知";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(100, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.toolStripMenuItem1.Text = "置顶";
             this.toolStripMenuItem1.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // 更新ToolStripMenuItem
             // 
             this.更新ToolStripMenuItem.Name = "更新ToolStripMenuItem";
-            this.更新ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.更新ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.更新ToolStripMenuItem.Text = "刷新";
-            this.更新ToolStripMenuItem.Click += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
+            this.更新ToolStripMenuItem.Click += new System.EventHandler(this.更新ToolStripMenuItem_Click_1);
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
