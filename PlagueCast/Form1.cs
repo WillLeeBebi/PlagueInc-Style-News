@@ -153,13 +153,17 @@ namespace PlagueCast
         {
             List<NewsItem> news = e.Result as List<NewsItem>;
             if (null != status) { pstatus = status; }
-            if (null != news){ newsItems = news;}
-
+            if (null != news)
+            {
+                newsItems = news;
+                frmNewsList.lblInfoArea.Text = "于"+ DateTime.Now.ToString("yyyy\\-MM\\-dd HH\\:mm\\:ss")+"更新";
+            }
+            
             if (null != newsItems) { 
                 lock (marqueeContents)
                 {
                     marqueeContents.Clear();
-                    marqueeContents.Add(news.First().title);
+                    marqueeContents.Add(newsItems.First().title);
                     marqueeContents.Add(pstatus);
                     //read(marqueeGraphics);
                 }

@@ -35,6 +35,7 @@
             this.itemTemplate = new System.Windows.Forms.Panel();
             this.lblContent = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
+            this.lblInfoArea = new System.Windows.Forms.Label();
             this.tblLiskContainer.SuspendLayout();
             this.itemTemplate.SuspendLayout();
             this.SuspendLayout();
@@ -95,6 +96,15 @@
             this.lblTime.Text = "label1";
             this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // lblInfoArea
+            // 
+            this.lblInfoArea.Location = new System.Drawing.Point(12, 350);
+            this.lblInfoArea.Name = "lblInfoArea";
+            this.lblInfoArea.Size = new System.Drawing.Size(443, 16);
+            this.lblInfoArea.TabIndex = 3;
+            this.lblInfoArea.Text = "新闻加载中";
+            this.lblInfoArea.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FrmNewsList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -102,6 +112,7 @@
             this.BackgroundImage = global::PlagueCast.Properties.Resources.bg_list;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(470, 366);
+            this.Controls.Add(this.lblInfoArea);
             this.Controls.Add(this.itemTemplate);
             this.Controls.Add(this.tblLiskContainer);
             this.DoubleBuffered = true;
@@ -125,5 +136,6 @@
         private System.Windows.Forms.Panel itemTemplate;
         private System.Windows.Forms.Label lblContent;
         private System.Windows.Forms.Label lblTime;
+        public System.Windows.Forms.Label lblInfoArea;
     }
 }

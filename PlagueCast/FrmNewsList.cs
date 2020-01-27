@@ -85,6 +85,17 @@ namespace PlagueCast
             g.DrawImage(bg, 0, 0, Width, Height);
             DrawItem(listGraphics);
             g.DrawImage(listSurface, tblLiskContainer.Location);
+            g.DrawString(lblInfoArea.Text, lblInfoArea.Font, fgPaint, InfoArea, alignRight);
+        }
+
+        private RectangleF infoArea = RectangleF.Empty;
+        RectangleF InfoArea {
+            get {
+                if (RectangleF.Empty == infoArea) {
+                    infoArea = new RectangleF(lblInfoArea.Left,lblInfoArea.Top,lblInfoArea.Width,lblInfoArea.Height);
+                }
+                return infoArea;
+            }
         }
 
         float velotery = 0;
