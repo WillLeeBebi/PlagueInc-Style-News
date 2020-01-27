@@ -170,17 +170,17 @@ namespace PlagueCast
 
                 if (lastlen != -1)
                 {
-                    int count = news.Count - lastlen;
+                    int count = newsItems.Count - lastlen;
                     if (count > 0 && chkNotification.Checked) {
                         for(int i = count - 1; i >= 0; i--)
                         {
-                            NewsItem ni = news[i];
+                            NewsItem ni = newsItems[i];
                             notificationQueue.Add(new FrmNewsDialog(ni.title,ni.summary,ni.sourceUrl));
                         }
                         raiseNotification();
                     }
                 }
-                lastlen = news.Count;
+                lastlen = newsItems.Count;
             }
             
             else
