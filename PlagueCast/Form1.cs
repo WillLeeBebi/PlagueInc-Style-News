@@ -114,29 +114,26 @@ namespace PlagueCast
             }
             strWidth =(int) g.MeasureString(current, marFont).Width;
         }
-        WebClient wc = new WebClient() {
-            Encoding=Encoding.UTF8
-        };
+        //WebClient wc = new WebClient() {Encoding=Encoding.UTF8 };
         private void newsGetter_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
-                //HttpWebRequest xhr = BomberUtils.MakeHttpGet(Program.urlnews, null);
-                //xhr.Referer = "https://3g.dxy.cn/newh5/view/pneumonia_timeline";
-                //xhr.Accept = "application/json";
-                //xhr.ContentType = "application/json;charset=utf-8";
-                //String newshtml = BomberUtils.GetHttpResponse(xhr);
-                
-                string newshtml = wc.DownloadString(Program.urlnews);
-                String html = wc.DownloadString(Program.url);//Utils.httpGet(Program.url);
+
+
+                string newshtml = Utils.httpGet(Program.urlnews);//wc.DownloadString(Program.urlnews);
+                String html = Utils.httpGet(Program.url);// wc.DownloadString(Program.url);//Utils.httpGet(Program.url);
 
 
                 String json1 = Utils.SearchJson(newshtml, "\"data\":");
                 String json0 = Utils.SearchJson(html, "window.getTimelineService");
                 status = null;
                 status = Utils.SearchJson(html, "window.getStatisticsService");
-                status = JsonConvert.DeserializeObject<SummaryItem>(status).countRemark;
-                status = status.Replace('\r', ' ').Replace('\n', ' ');
+
+                SummaryItem si = JsonConvert.DeserializeObject<SummaryItem>(status);
+                status = $"截至{Utils.parstUnixTime(si.modifyTime).ToString("yyyy\\年MM\\月dd\\日 HH\\:mm")}，全国确诊{si.confirmedCount}例，疑似{si.suspectedCount}例，治愈{si.curedCount}例，死亡{si.deadCount}例。";
+                //丁香园的数据改成了更方便解析的形式，把原来的文字去除了
+
                 List<NewsItem> list0 = JsonConvert.DeserializeObject<List<NewsItem>>(json0);
                 list0.AddRange(JsonConvert.DeserializeObject<List<NewsItem>>(json1));
                 e.Result = list0;
@@ -159,7 +156,7 @@ namespace PlagueCast
                 frmNewsList.lblInfoArea.Text = "于"+ DateTime.Now.ToString("yyyy\\-MM\\-dd HH\\:mm\\:ss")+"更新";
             }
             
-            if (null != newsItems) { 
+            if (null != newsItems && newsItems.Count>0) { 
                 lock (marqueeContents)
                 {
                     marqueeContents.Clear();
@@ -187,7 +184,7 @@ namespace PlagueCast
             {
                 marqueeContents.Clear();
                 marqueeContents.Add("预计需要更长时间获取新闻。");
-                updateTimer.Interval = 30000;
+                updateTimer.Interval = 60000;
             }
         }
 
@@ -218,12 +215,13 @@ namespace PlagueCast
         List<FrmNewsDialog> notificationQueue = new List<FrmNewsDialog>();
         bool isDialogShowing = false;
         void raiseNotification() {
+            notificationQueue.Distinct();
             if (isDialogShowing) { return; }
             while (notificationQueue.Count > 0) {
                 FrmNewsDialog fd = notificationQueue[0];
-                notificationQueue.RemoveAt(0);
                 isDialogShowing = true;
                 fd.ShowDialog();
+                notificationQueue.RemoveAt(0);
                 isDialogShowing = false;
             }
         }
@@ -237,7 +235,7 @@ namespace PlagueCast
         {
             splashTimer.Enabled = false;
 
-            notificationQueue.Add(new FrmNewsDialog("欢迎使用 疫情播报桌面小部件","数据来自丁香园（爬虫），每8分钟更新一次。获取新闻可能失败（玄学问题），请换网或在github提Issue。\r\n点击详情打开github页面", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
+            notificationQueue.Add(new FrmNewsDialog("欢迎使用 疫情播报桌面小部件","数据来自丁香园（爬虫），每8分钟更新一次。\r\n点击详情打开丁香园页面", Program.url));
             notificationQueue.Add(new FrmNewsDialog("提示：在标题栏左边图标右击有选项菜单","右击标题栏左边NEWS图标，可以打开选项菜单，可以设置通知，置顶，刷新以及退出。", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
             notificationQueue.Add(new FrmNewsDialog("提示：单击新闻列表项目打开详情","单击新闻列表中的一项可以查看标题，内容和原始链接。", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
             raiseNotification();
@@ -251,6 +249,18 @@ namespace PlagueCast
         private void 更新ToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             updateTimer_Tick(sender, e);
+        }
+
+        private void 打开丁香园疫情播报页面ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            notificationQueue.Add(new FrmNewsDialog("提示: 数据来自丁香园", "数据来自丁香园（爬虫），每8分钟更新一次。\r\n点击详情打开丁香园疫情播报页面", Program.url));
+            raiseNotification();
+        }
+
+        private void 打开Github页面ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            notificationQueue.Add(new FrmNewsDialog("提示: 打开Github页面查看更新", "如果新闻持续不更新，或者显示奇怪的内容，请检测有没有版本更新。\r\n点击详情打开Github页面", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
+            raiseNotification();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)

@@ -15,7 +15,14 @@ namespace PlagueCast
     public partial class FrmNewsDialog : Form
     {
         public string title, content, link;
-        
+
+        public override bool Equals(object obj)
+        {
+            if (obj is FrmNewsDialog) {
+                return (obj as FrmNewsDialog).title == this.title;
+            }
+            return false;
+        }
 
         public FrmNewsDialog(string title, string content, string link)
         {

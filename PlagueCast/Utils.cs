@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PlagueCast
 {
@@ -13,11 +15,29 @@ namespace PlagueCast
         public static string httpGet(string url) {
             try
             {
-                HttpWebRequest req = BomberUtils.MakeHttpGet(url, "");
-                return BomberUtils.GetHttpResponse(req);
+                string curlpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "libs", "curl.exe");
+                ProcessStartInfo psi = new ProcessStartInfo(curlpath, "-t 10 -H 'X-Accel-Buffering: no' " + url);
+                psi.RedirectStandardInput = true;
+                psi.RedirectStandardOutput = true;
+                psi.RedirectStandardError = true;
+                psi.StandardOutputEncoding = Encoding.UTF8;
+                psi.StandardErrorEncoding = Encoding.UTF8;
+                psi.UseShellExecute = false;
+                psi.CreateNoWindow = true;
+                Process ps = Process.Start(psi);
+                Task<string> result = ps.StandardOutput.ReadToEndAsync();
+                Task<string> error = ps.StandardError.ReadToEndAsync();
+                ps.WaitForExit();
+                if (ps.ExitCode == 0)
+                {
+                    return result.Result;
+                }
+                else {
+                    throw new Exception("Process exited with code "+ps.ExitCode+", message\r\n"+error.Result);
+                }
             }
             catch (Exception ex) {
-                Console.WriteLine(ex.ToString());
+                Console.Write(ex.ToString());
                 return null;
             }
         }
@@ -69,81 +89,6 @@ namespace PlagueCast
             DateTime dt = startTime.AddSeconds(time/1000);
             return dt;
         }
-
-    }
-
-
-    public static class BomberUtils
-    {
-        
-
-        public static string useragent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:72.0) Gecko/20100101 Firefox/72.0";
-
-        public static string DictionaryToHttpKeyValue(Dictionary<string, string> dic)
-        {
-            StringBuilder builder = new StringBuilder();
-            int i = 0;
-            foreach (var item in dic)
-            {
-                if (i > 0)
-                    builder.Append("&");
-                builder.AppendFormat("{0}={1}", item.Key, item.Value);
-                i++;
-            }
-            return builder.ToString();
-        }
-        
-        public static HttpWebRequest MakeHttpGet(string url, string httpKeyValue)
-        {
-            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url + "?" + httpKeyValue);
-            req.Timeout = 9999;
-            req.Method = "GET";
-            req.Accept = "text/html,application/xhtml+xml,application/xml,application/json,image/webp,image/apng,*/*;q=0.8";
-            req.UserAgent = useragent;
-            req.Headers.Add("Accept-Language", "zh,zh-CN;q=0.9;q=0.9");
-            req.Headers.Add("Accept-Encoding", "identity");
-            req.Headers.Add("Upgrade-Insecure-Requests", "1");
-            req.Headers.Add("Cache-Control", "no-cache");
-            req.Headers.Add("Pragma", "no-cache");
-            req.Headers.Add("DNT", "1");
-            req.Headers.Add("TE", "Trailers");
-
-            //req.Connection = "Keep-Alive";
-            req.AllowAutoRedirect = false;
-            return req;
-        }
-        
-        public static string GetHttpResponse(HttpWebRequest req)
-        {
-            string result = "";
-            try
-            {
-                HttpWebResponse resp = (HttpWebResponse)req.GetResponse();
-                Stream stream = resp.GetResponseStream();
-                stream.ReadTimeout = 9999;
-               
-                    using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-                    {
-                        result = reader.ReadToEnd();
-                    }
-                
-                return result;
-            }
-            catch (WebException ex)
-            {
-                if (null == ex.Response)
-                {
-                    throw ex;
-                }
-                if ((int)((HttpWebResponse)ex.Response).StatusCode < 400)
-                {
-                    return ex.Message;
-                }
-                throw ex;
-            }
-        }
-
-
 
     }
 

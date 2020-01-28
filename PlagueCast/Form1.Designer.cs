@@ -42,6 +42,9 @@
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.ptListBegin = new System.Windows.Forms.Label();
             this.splashTimer = new System.Windows.Forms.Timer(this.components);
+            this.打开丁香园疫情播报页面ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开Github页面ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -91,9 +94,12 @@
             this.chkNotification,
             this.toolStripMenuItem1,
             this.更新ToolStripMenuItem,
-            this.退出ToolStripMenuItem});
+            this.退出ToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.打开丁香园疫情播报页面ToolStripMenuItem,
+            this.打开Github页面ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(218, 164);
             // 
             // chkNotification
             // 
@@ -101,14 +107,14 @@
             this.chkNotification.CheckOnClick = true;
             this.chkNotification.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkNotification.Name = "chkNotification";
-            this.chkNotification.Size = new System.Drawing.Size(152, 22);
+            this.chkNotification.Size = new System.Drawing.Size(217, 22);
             this.chkNotification.Text = "通知";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.CheckOnClick = true;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(217, 22);
             this.toolStripMenuItem1.Text = "置顶";
             this.toolStripMenuItem1.CheckedChanged += new System.EventHandler(this.toolStripMenuItem1_CheckedChanged);
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
@@ -116,14 +122,14 @@
             // 更新ToolStripMenuItem
             // 
             this.更新ToolStripMenuItem.Name = "更新ToolStripMenuItem";
-            this.更新ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.更新ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.更新ToolStripMenuItem.Text = "刷新";
             this.更新ToolStripMenuItem.Click += new System.EventHandler(this.更新ToolStripMenuItem_Click_1);
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
@@ -153,6 +159,25 @@
             this.splashTimer.Enabled = true;
             this.splashTimer.Interval = 1000;
             this.splashTimer.Tick += new System.EventHandler(this.splashTimer_Tick);
+            // 
+            // 打开丁香园疫情播报页面ToolStripMenuItem
+            // 
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Name = "打开丁香园疫情播报页面ToolStripMenuItem";
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Text = "打开丁香园疫情播报页面";
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Click += new System.EventHandler(this.打开丁香园疫情播报页面ToolStripMenuItem_Click);
+            // 
+            // 打开Github页面ToolStripMenuItem
+            // 
+            this.打开Github页面ToolStripMenuItem.Name = "打开Github页面ToolStripMenuItem";
+            this.打开Github页面ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.打开Github页面ToolStripMenuItem.Text = "打开Github页面";
+            this.打开Github页面ToolStripMenuItem.Click += new System.EventHandler(this.打开Github页面ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(214, 6);
             // 
             // Form1
             // 
@@ -194,6 +219,9 @@
         private System.Windows.Forms.ToolStripMenuItem chkNotification;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Timer splashTimer;
+        private System.Windows.Forms.ToolStripMenuItem 打开丁香园疫情播报页面ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 打开Github页面ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

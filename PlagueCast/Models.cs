@@ -73,7 +73,7 @@ namespace PlagueCast
         /// </summary>
         public string infectSource { get; set; }
         /// <summary>
-        /// 未完全掌握，存在人传人、医务人员感染、一定范围社区传播
+        /// 经呼吸道飞沫传播，亦可通过接触传播
         /// </summary>
         public string passWay { get; set; }
         /// <summary>
@@ -93,20 +93,35 @@ namespace PlagueCast
         /// </summary>
         public string deleted { get; set; }
         /// <summary>
-        /// 全国 确诊 2002 例 疑似 2684 例
-        ///死亡 56 例 治愈 49 例
+        /// 
         /// </summary>
         public string countRemark { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long confirmedCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long suspectedCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long curedCount { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public long deadCount { get; set; }
         /// <summary>
         /// 新型冠状病毒 2019-nCoV
         /// </summary>
         public string virus { get; set; }
         /// <summary>
-        /// 病毒是否变异：存在可能
+        /// 易感人群: 人群普遍易感。老年人及有基础疾病者感染后病情较重，儿童及婴幼儿也有发病
         /// </summary>
         public string remark1 { get; set; }
         /// <summary>
-        /// 疫情是否扩散：是
+        /// 潜伏期: 一般为 3~7 天，最长不超过 14 天，潜伏期内存在传染性
         /// </summary>
         public string remark2 { get; set; }
         /// <summary>
@@ -125,5 +140,9 @@ namespace PlagueCast
         /// 疑似病例数来自国家卫健委数据，目前为全国数据，未分省市自治区等
         /// </summary>
         public string generalRemark { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string abroadRemark { get; set; }
     }
 }
