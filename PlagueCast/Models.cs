@@ -64,6 +64,7 @@ namespace PlagueCast
         /// 
         /// </summary>
         public long createTime { get; set; }
+        public long updateTime { get; set; }
         /// <summary>
         /// 
         /// </summary>
