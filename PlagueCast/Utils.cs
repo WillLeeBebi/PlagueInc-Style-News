@@ -12,34 +12,37 @@ namespace PlagueCast
 {
     static class Utils
     {
+        private static WebClient wc = new WebClient() { Encoding = Encoding.UTF8 };
+
         public static string httpGet(string url) {
-            try
-            {
-                string curlpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "libs", "curl.exe");
-                ProcessStartInfo psi = new ProcessStartInfo(curlpath, "-t 10 -H 'X-Accel-Buffering: no' " + url);
-                psi.RedirectStandardInput = true;
-                psi.RedirectStandardOutput = true;
-                psi.RedirectStandardError = true;
-                psi.StandardOutputEncoding = Encoding.UTF8;
-                psi.StandardErrorEncoding = Encoding.UTF8;
-                psi.UseShellExecute = false;
-                psi.CreateNoWindow = true;
-                Process ps = Process.Start(psi);
-                Task<string> result = ps.StandardOutput.ReadToEndAsync();
-                Task<string> error = ps.StandardError.ReadToEndAsync();
-                ps.WaitForExit();
-                if (ps.ExitCode == 0)
-                {
-                    return result.Result;
-                }
-                else {
-                    throw new Exception("Process exited with code "+ps.ExitCode+", message\r\n"+error.Result);
-                }
-            }
-            catch (Exception ex) {
-                Console.Write(ex.ToString());
-                return null;
-            }
+        return wc.DownloadString(url);
+            //try
+            //{
+            //    string curlpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "libs", "curl.exe");
+            //    ProcessStartInfo psi = new ProcessStartInfo(curlpath, "-t 10 -H 'X-Accel-Buffering: no' " + url);
+            //    psi.RedirectStandardInput = true;
+            //    psi.RedirectStandardOutput = true;
+            //    psi.RedirectStandardError = true;
+            //    psi.StandardOutputEncoding = Encoding.UTF8;
+            //    psi.StandardErrorEncoding = Encoding.UTF8;
+            //    psi.UseShellExecute = false;
+            //    psi.CreateNoWindow = true;
+            //    Process ps = Process.Start(psi);
+            //    Task<string> result = ps.StandardOutput.ReadToEndAsync();
+            //    Task<string> error = ps.StandardError.ReadToEndAsync();
+            //    ps.WaitForExit();
+            //    if (ps.ExitCode == 0)
+            //    {
+            //        return result.Result;
+            //    }
+            //    else {
+            //        throw new Exception("Process exited with code "+ps.ExitCode+", message\r\n"+error.Result);
+            //    }
+            //}
+            //catch (Exception ex) {
+            //    Console.Write(ex.ToString());
+            //    return null;
+            //}
         }
 
         public static string SearchJson(string html, string begin) {

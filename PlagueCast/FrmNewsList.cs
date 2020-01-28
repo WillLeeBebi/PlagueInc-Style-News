@@ -201,7 +201,7 @@ namespace PlagueCast
                 RectangleF timeArea = new RectangleF(baseX +lblTime.Left, baseY + lblTime.Top, lblTime.Width, lblTime.Height);
                 RectangleF titleArea = new RectangleF(baseX +lblContent.Left, baseY + lblContent.Top, lblContent.Width, lblContent.Height);
 
-                g.DrawString(Utils.parstUnixTime(ti.pubDate).ToString("yyyy\\-MM\\-dd HH\\:mm\\:ss"), lblTime.Font, fgPaint, timeArea, alignLeft);
+                g.DrawString(Utils.parstUnixTime(ti.pubDate).ToString("yyyy\\-MM\\-dd HH\\:mm\\:ss")+"  "+ti.provinceName, lblTime.Font, fgPaint, timeArea, alignLeft);
                 g.DrawImage(bgItem, titleArea);
                 g.DrawString(ti.title, lblTime.Font, fgPaint, titleArea, alignLeft);
 

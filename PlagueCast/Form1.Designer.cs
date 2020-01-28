@@ -38,13 +38,13 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.更新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.打开丁香园疫情播报页面ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打开Github页面ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newsGetter = new System.ComponentModel.BackgroundWorker();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.ptListBegin = new System.Windows.Forms.Label();
             this.splashTimer = new System.Windows.Forms.Timer(this.components);
-            this.打开丁香园疫情播报页面ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.打开Github页面ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +76,9 @@
             this.conMarquee.TabIndex = 1;
             this.conMarquee.Text = "格陵兰封锁港口";
             this.conMarquee.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.conMarquee.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dragger_MouseDown);
+            this.conMarquee.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dragger_MouseMove);
+            this.conMarquee.MouseUp += new System.Windows.Forms.MouseEventHandler(this.dragger_MouseUp);
             // 
             // btnContext
             // 
@@ -99,7 +102,7 @@
             this.打开丁香园疫情播报页面ToolStripMenuItem,
             this.打开Github页面ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(218, 164);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(218, 142);
             // 
             // chkNotification
             // 
@@ -133,6 +136,25 @@
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(214, 6);
+            // 
+            // 打开丁香园疫情播报页面ToolStripMenuItem
+            // 
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Name = "打开丁香园疫情播报页面ToolStripMenuItem";
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Text = "打开丁香园疫情播报页面";
+            this.打开丁香园疫情播报页面ToolStripMenuItem.Click += new System.EventHandler(this.打开丁香园疫情播报页面ToolStripMenuItem_Click);
+            // 
+            // 打开Github页面ToolStripMenuItem
+            // 
+            this.打开Github页面ToolStripMenuItem.Name = "打开Github页面ToolStripMenuItem";
+            this.打开Github页面ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.打开Github页面ToolStripMenuItem.Text = "打开Github页面";
+            this.打开Github页面ToolStripMenuItem.Click += new System.EventHandler(this.打开Github页面ToolStripMenuItem_Click);
+            // 
             // newsGetter
             // 
             this.newsGetter.DoWork += new System.ComponentModel.DoWorkEventHandler(this.newsGetter_DoWork);
@@ -159,25 +181,6 @@
             this.splashTimer.Enabled = true;
             this.splashTimer.Interval = 1000;
             this.splashTimer.Tick += new System.EventHandler(this.splashTimer_Tick);
-            // 
-            // 打开丁香园疫情播报页面ToolStripMenuItem
-            // 
-            this.打开丁香园疫情播报页面ToolStripMenuItem.Name = "打开丁香园疫情播报页面ToolStripMenuItem";
-            this.打开丁香园疫情播报页面ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.打开丁香园疫情播报页面ToolStripMenuItem.Text = "打开丁香园疫情播报页面";
-            this.打开丁香园疫情播报页面ToolStripMenuItem.Click += new System.EventHandler(this.打开丁香园疫情播报页面ToolStripMenuItem_Click);
-            // 
-            // 打开Github页面ToolStripMenuItem
-            // 
-            this.打开Github页面ToolStripMenuItem.Name = "打开Github页面ToolStripMenuItem";
-            this.打开Github页面ToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
-            this.打开Github页面ToolStripMenuItem.Text = "打开Github页面";
-            this.打开Github页面ToolStripMenuItem.Click += new System.EventHandler(this.打开Github页面ToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(214, 6);
             // 
             // Form1
             // 

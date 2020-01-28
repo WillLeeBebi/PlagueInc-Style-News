@@ -234,7 +234,7 @@ namespace PlagueCast
             splashTimer.Enabled = false;
 
             notificationQueue.Add(new FrmNewsDialog("欢迎使用 疫情播报桌面小部件", "数据来自丁香园（爬虫由 http://lab.isaaclin.cn/nCoV/ 提供。)，每8分钟更新一次。\r\n点击详情打开丁香园页面", Program.url));
-            notificationQueue.Add(new FrmNewsDialog("提示：在标题栏左边图标右击有选项菜单","右击标题栏左边NEWS图标，可以打开选项菜单，可以设置通知，置顶，刷新以及退出。", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
+            notificationQueue.Add(new FrmNewsDialog("提示：在标题栏左边图标右击有选项菜单","右击标题栏左边NEWS图标，可以打开选项菜单，可以设置通知，置顶，刷新以及退出。按住滚动字幕部分可以拖动", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
             notificationQueue.Add(new FrmNewsDialog("提示：单击新闻列表项目打开详情","单击新闻列表中的一项可以查看标题，内容和原始链接。", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
             raiseNotification();
         }
@@ -264,6 +264,34 @@ namespace PlagueCast
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             TopMost = toolStripMenuItem1.Checked;
+        }
+
+
+
+        private void dragger_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            dx = e.X; dy = e.Y;
+        }
+        bool dragging = false;
+        int dx = 0, dy = 0;
+        private void dragger_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                this.Left += e.X - dx;
+                this.Top += e.Y - dy;
+
+                frmNewsList.Left = this.Left + ptListBegin.Left;
+                frmNewsList.Top = this.Top + ptListBegin.Top;
+            }
+        }
+        private void dragger_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
+            frmNewsList.Left = this.Left + ptListBegin.Left;
+            frmNewsList.Top = this.Top + ptListBegin.Top;
+
         }
     }
 }
