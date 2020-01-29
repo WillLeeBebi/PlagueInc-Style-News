@@ -3,4 +3,4 @@
 
 [点我下载](https://github.com/ZYFDroid/PlagueInc-Style-News/releases)
 
-数据来自丁香园（爬虫由 http://lab.isaaclin.cn/nCoV/ 提供。)
+数据来自丁香园（~~爬虫由 http://lab.isaaclin.cn/nCoV/ 提供。~~ (这个爬虫数据有bug，只能先改回去))
