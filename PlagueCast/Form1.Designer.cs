@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.renderTimer = new System.Windows.Forms.Timer(this.components);
             this.btnExpand = new System.Windows.Forms.Button();
             this.conMarquee = new System.Windows.Forms.Label();
@@ -45,6 +46,7 @@
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.ptListBegin = new System.Windows.Forms.Label();
             this.splashTimer = new System.Windows.Forms.Timer(this.components);
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -182,6 +184,14 @@
             this.splashTimer.Interval = 1000;
             this.splashTimer.Tick += new System.EventHandler(this.splashTimer_Tick);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "疫情动态";
+            this.notifyIcon1.Visible = true;
+            this.notifyIcon1.Click += new System.EventHandler(this.notifyIcon1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -197,8 +207,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Location = new System.Drawing.Point(30, 30);
             this.Name = "Form1";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "疫情播报";
+            this.Activated += new System.EventHandler(this.Form1_Activated);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);
@@ -225,6 +237,7 @@
         private System.Windows.Forms.ToolStripMenuItem 打开丁香园疫情播报页面ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打开Github页面ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

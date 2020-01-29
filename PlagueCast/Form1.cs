@@ -191,6 +191,8 @@ namespace PlagueCast
             if (!newsGetter.IsBusy) {
                 newsGetter.RunWorkerAsync();
             }
+            notifyIcon1.Visible = false;
+            notifyIcon1.Visible = true;//prevent trayicon from disappearing
         }
 
         private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -273,6 +275,21 @@ namespace PlagueCast
         }
         bool dragging = false;
         int dx = 0, dy = 0;
+
+        private void notifyIcon1_Click(object sender, EventArgs e)
+        {
+            this.Activate();
+            if (frmNewsList.Visible)
+            {
+                frmNewsList.Activate();
+            }
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            
+        }
+
         private void dragger_MouseMove(object sender, MouseEventArgs e)
         {
             if (dragging)
