@@ -53,7 +53,7 @@ namespace PlagueCast
         {
             gdi = new GdiSystem(this);
             draw();
-            gdi.UpdateWindow();    
+            gdi.UpdateWindow();
         }
 
         void draw() {

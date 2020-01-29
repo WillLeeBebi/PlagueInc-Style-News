@@ -52,6 +52,12 @@ namespace PlagueCast
         /// 
         /// </summary>
         public long modifyTime { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is NewsItem)) { return false; }
+            return pubDate==((NewsItem)obj).pubDate && title== ((NewsItem)obj).title;
+        }
     }
 
     public class SummaryItem

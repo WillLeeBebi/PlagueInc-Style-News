@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyGDIFramework;
-using Newtonsoft.Json;
 using System.Net;
 
 namespace PlagueCast
@@ -119,28 +118,19 @@ namespace PlagueCast
         {
             try
             {
-
-
-                string newshtml = Utils.httpGet(Program.urlnews);//wc.DownloadString(Program.urlnews);
-                String json1 = Utils.SearchJson(newshtml, "\"results\"");
-                List<NewsItem> list0 = JsonConvert.DeserializeObject<List<NewsItem>>(json1);
-                e.Result = list0;
+                string newshtml = Utils.httpGet(Program.urlnews);
+                String html = Utils.httpGet(Program.url);//Utils.httpGet(Program.url);
                 
-            }
-            catch (Exception ex) {
-                Console.WriteLine(ex.ToString());
-            }
-
-            try
-            {
-                
-                String allhtml = Utils.httpGet(Program.urloverall);// wc.DownloadString(Program.url);//Utils.httpGet(Program.url);
+                String json1 = Utils.SearchJson(newshtml, "\"data\":");
+                String json0 = Utils.SearchJson(html, "window.getTimelineService");
                 status = null;
-                status = Utils.SearchJson(allhtml, "\"results\"");
-                SummaryItem si = JsonConvert.DeserializeObject<List<SummaryItem>>(status)[0];
-                status = $"截至{Utils.parstUnixTime(si.updateTime).ToString("yyyy\\年MM\\月dd\\日 HH\\:mm")}，全国确诊{si.confirmedCount}例，疑似{si.suspectedCount}例，治愈{si.curedCount}例，死亡{si.deadCount}例。";
+                status = Utils.SearchJson(html, "window.getStatisticsService");
+                SummaryItem si = JsonConvert.DeserializeObject<SummaryItem>(status);
+                status = $"截至{Utils.parstUnixTime(si.modifyTime).ToString("yyyy\\年MM\\月dd\\日 HH\\:mm")}，全国确诊{si.confirmedCount}例，疑似{si.suspectedCount}例，治愈{si.curedCount}例，死亡{si.deadCount}例。";
 
-
+                List<NewsItem> list0 = new List<NewsItem>();//JsonConvert.DeserializeObject<List<NewsItem>>(json0);
+                list0.AddRange(JsonConvert.DeserializeObject<List<NewsItem>>(json1));
+                e.Result = list0.Distinct().ToList();
             }
             catch (Exception ex)
             {
@@ -172,10 +162,19 @@ namespace PlagueCast
 
                 if (newestTime != -1)
                 {
-                    notificationQueue.AddRange(newsItems.Where(ni => ni.pubDate > newestTime).Select(p => new FrmNewsDialog(p.title,p.summary,p.sourceUrl)));
-                    raiseNotification();
+                    if (newsItems.First().pubDate > newestTime)
+                    {
+                        IEnumerable<NewsItem> newitems = newsItems.Where(ni => ni.pubDate > newestTime);
+                        notificationQueue.AddRange(newitems.Select(p => new FrmNewsDialog(p.title, p.summary, p.sourceUrl)));
+                        newestTime = newsItems.First().pubDate;
+                        raiseNotification();
+                    }
+                    
                 }
-                newestTime = newsItems.First().pubDate;
+                else
+                {
+                    newestTime = newsItems.First().pubDate;
+                }
             }
             
             else
@@ -213,13 +212,12 @@ namespace PlagueCast
         List<FrmNewsDialog> notificationQueue = new List<FrmNewsDialog>();
         bool isDialogShowing = false;
         void raiseNotification() {
-            notificationQueue.Distinct();
             if (isDialogShowing) { return; }
             while (notificationQueue.Count > 0) {
                 FrmNewsDialog fd = notificationQueue[0];
+                notificationQueue.RemoveAt(0);
                 isDialogShowing = true;
                 fd.ShowDialog();
-                notificationQueue.RemoveAt(0);
                 isDialogShowing = false;
             }
         }
@@ -233,7 +231,7 @@ namespace PlagueCast
         {
             splashTimer.Enabled = false;
 
-            notificationQueue.Add(new FrmNewsDialog("欢迎使用 疫情播报桌面小部件", "数据来自丁香园（爬虫由 http://lab.isaaclin.cn/nCoV/ 提供。)，每8分钟更新一次。\r\n点击详情打开丁香园页面", Program.url));
+            notificationQueue.Add(new FrmNewsDialog("欢迎使用 疫情播报桌面小部件", "数据来自丁香园（爬虫)，每8分钟更新一次。\r\n点击详情打开丁香园页面", Program.url));
             notificationQueue.Add(new FrmNewsDialog("提示：在标题栏左边图标右击有选项菜单","右击标题栏左边NEWS图标，可以打开选项菜单，可以设置通知，置顶，刷新以及退出。按住滚动字幕部分可以拖动", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
             notificationQueue.Add(new FrmNewsDialog("提示：单击新闻列表项目打开详情","单击新闻列表中的一项可以查看标题，内容和原始链接。", "https://github.com/ZYFDroid/PlagueInc-Style-News"));
             raiseNotification();
@@ -251,7 +249,7 @@ namespace PlagueCast
 
         private void 打开丁香园疫情播报页面ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            notificationQueue.Add(new FrmNewsDialog("提示: 数据来自丁香园", "数据来自丁香园（爬虫由 http://lab.isaaclin.cn/nCoV/ 提供。)，每8分钟更新一次。\r\n点击详情打开丁香园疫情播报页面", Program.url));
+            notificationQueue.Add(new FrmNewsDialog("提示: 数据来自丁香园", "数据来自丁香园（爬虫)，每8分钟更新一次。\r\n点击详情打开丁香园疫情播报页面", Program.url));
             raiseNotification();
         }
 
