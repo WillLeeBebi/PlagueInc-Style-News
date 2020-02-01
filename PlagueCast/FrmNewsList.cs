@@ -33,11 +33,11 @@ namespace PlagueCast
         {
             if (e.Delta > 0)
             {
-                velotery = -0.2f;
+                velotery -=0.2f;
             }
             else if (e.Delta < 0)
             {
-                velotery = 0.2f;
+                velotery += 0.2f;
             }
         }
 

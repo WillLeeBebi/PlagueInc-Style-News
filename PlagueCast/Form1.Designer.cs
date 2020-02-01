@@ -47,6 +47,7 @@
             this.ptListBegin = new System.Windows.Forms.Label();
             this.splashTimer = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,9 +103,10 @@
             this.退出ToolStripMenuItem,
             this.toolStripSeparator1,
             this.打开丁香园疫情播报页面ToolStripMenuItem,
+            this.toolStripMenuItem2,
             this.打开Github页面ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(218, 142);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(218, 186);
             // 
             // chkNotification
             // 
@@ -192,6 +194,13 @@
             this.notifyIcon1.Visible = true;
             this.notifyIcon1.Click += new System.EventHandler(this.notifyIcon1_Click);
             // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(217, 22);
+            this.toolStripMenuItem2.Text = "打开疫情相关网址导航";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -238,6 +247,7 @@
         private System.Windows.Forms.ToolStripMenuItem 打开Github页面ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }
 
